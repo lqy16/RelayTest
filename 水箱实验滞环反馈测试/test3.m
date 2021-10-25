@@ -1,0 +1,16 @@
+C1 = pid(0.033, 0.046 / 98.4, 0);
+C2 = pid(0.0375, 0.1 / 68.2, 0);
+G = tf(54.3, [123, 1]);
+T1 = G * C1 / (1 + G * C1);
+T2 = G * C2 / (1 + G * C2);
+splInvl = 1.1748;
+time = (0 : 323)' * splInvl;
+y1 = step(T1, time) + randn(324, 1) * 0.05;
+plot(time, y1);
+hold on;
+y2 = step(T2, time) + randn(324, 1) * 0.05;
+plot(time, y2);
+plot([0, time(end)], [1, 1], '--');
+xlabel('Time (s)');
+ylabel('Closed-loop step response');
+legend('The proposed method', "Berner et al.'s method", 'location', 'northeastoutside');

@@ -1,0 +1,3 @@
+[submodule "SystemIdentification"]
+	path = SystemIdentification
+	url = git@github.com:Tsinghua-Algorithm-Group/SystemIdentification.git
