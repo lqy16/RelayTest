@@ -1,9 +1,9 @@
 load('test2_data');
 % 降采样倍数
-downSamplingMultiple = 1;
-downSamplingSplInvl = downSamplingMultiple;
+downSamplingMultiple = 10;
+downSamplingSplInvl = splInvl * downSamplingMultiple;
 input = relay_input(1 : downSamplingMultiple : end);
-output = relay_output(1 : downSamplingMultiple : end) + 2;
+output = relay_output(1 : downSamplingMultiple : end) + 3.5;
 dataLen = length(input);
 relay_time = (0 : dataLen - 1)' * downSamplingSplInvl;
 % figure;
@@ -15,9 +15,9 @@ relay_time = (0 : dataLen - 1)' * downSamplingSplInvl;
 % ylabel('Output');
 % xlabel('Time (s)');
 % legend('Input', 'Output', 'location', 'northeastoutside');
-idCase = relayid(input, output, downSamplingSplInvl, 'foptd', 'maxDelay', 30, 'settlingTime', 500);
+idCase = relayid(input, output, downSamplingSplInvl, 'foptd', 'maxDelay', 30, 'settlingTime', 500, 'initKArr', 54.3);
 [estNumRank, estDenRank, estDelayRank, isIdSucRank] = identify(idCase, 'rank', 'isKOptimized', false, 'paintResult', true);
-[estNumCurve, estDenCurve, estDelayCurve, isIdSucCurve] = identify(idCase, 'curve', 'h', 17.5);
+[estNumCurve, estDenCurve, estDelayCurve, isIdSucCurve] = identify(idCase, 'curve', );
 G1 = tf(estNumRank, estDenRank);
 G2 = tf(estNumCurve, estDenCurve);
 step_time = (0 : 300 - 1)' * splInvl;
